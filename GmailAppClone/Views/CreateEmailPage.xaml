@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="GmailAppClone.Views.CreateEmailPage"
+             Title="Compose">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding AttachPhotoCommand}" IconImageSource="baseline_attachment_white_24.png"/>
+        <ToolbarItem Command="{Binding CreateEmailCommand}" IconImageSource="baseline_send_white_24.png"/>
+        <ToolbarItem Order="Secondary" />
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <Grid
+            RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+            ColumnDefinitions="Auto, Auto">
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="From"
+                VerticalOptions="Center"
+                FontSize="Medium"
+                TextColor="Gray"/>
+
+            <Entry
+                Grid.Row="0"
+                Grid.Column="1"
+                Grid.ColumnSpan="4"
+                TextTransform="Lowercase"
+                Keyboard="Email"
+                Text="{Binding From}"/>
+
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Text="To"
+                FontSize="Medium"
+                VerticalOptions="Center"
+                TextColor="Gray"/>
+
+            <Entry
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="4"
+                TextTransform="Lowercase"
+                Keyboard="Email"
+                Text="{Binding To}"/>
+
+            <Entry
+                Grid.Row="2"
+                Grid.ColumnSpan="5"
+                Placeholder="Subject"
+                Keyboard="Text"
+                Text="{Binding Subject}"
+                PlaceholderColor="Gray"/>
+
+            <Image 
+                Grid.Row="4"
+                Grid.ColumnSpan="5"
+                Source="{Binding Attachment}"
+                WidthRequest="200"
+                HeightRequest="200"/>
+
+            <Editor
+                Grid.Row="3"
+                Grid.ColumnSpan="5"
+                Placeholder="Compose email"
+                Keyboard="Text"
+                Text="{Binding Body}"
+                HeightRequest="200"
+                PlaceholderColor="Gray"/>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

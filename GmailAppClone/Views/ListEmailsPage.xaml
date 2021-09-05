@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:viewModels="clr-namespace:GmailAppClone.ViewModels"
+             mc:Ignorable="d"
+             x:Class="GmailAppClone.Views.ListEmailsPage"
+             x:Name="EmailListPage"
+             Title="Primary">
+    <ContentPage.BindingContext>
+        <viewModels:ListEmailsViewModel/>
+    </ContentPage.BindingContext>
+
+    <NavigationPage.TitleView>
+        <Grid ColumnDefinitions="Auto,6*,Auto" Padding="5">
+            <Image 
+                Grid.Column="0" 
+                Source="outline_menu_white_24.png"/>
+            <Label 
+                Grid.Column="1" 
+                Text="Primary" 
+                TextColor="White" 
+                FontAttributes="Bold" 
+                FontSize="Large" 
+                HorizontalOptions="Center"/>
+            <Image 
+                Grid.Column="2" 
+                Source="outline_search_white_24.png"/>
+        </Grid>
+    </NavigationPage.TitleView>
+
+    <StackLayout>
+
+        <CollectionView 
+            Grid.Row="0"
+            ItemsSource="{Binding Emails}" 
+            ItemsLayout="VerticalList"
+            SelectionMode="Single"
+            SelectedItem="{Binding SelectedEmail}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItem 
+                                IconImageSource="@baseline_delete_white_18.png"
+                                Command="{Binding Source={x:Reference EmailListPage}, Path=BindingContext.DeleteEmailCommand}"
+                                CommandParameter="{Binding}"
+                                IsDestructive="True"
+                                BackgroundColor="Red"/>
+                        </SwipeView.RightItems>
+                        <Frame
+                            BorderColor="LightGray"
+                            Padding="0">
+                            <Grid 
+                                RowDefinitions="Auto, Auto, Auto"
+                                ColumnDefinitions="Auto,Auto, Auto"
+                                Padding="10"
+                                RowSpacing="0">
+
+                                <Image 
+                                    Grid.RowSpan="3"
+                                    Grid.Column="0"
+                                    Source="twotone_account_circle_black_36.png"/>
+
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Text="{Binding From}"
+                                    FontSize="Small"
+                                    TextColor="Black"/>
+
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Text="{Binding Subject}"
+                                    FontSize="Small"
+                                    TextColor="Black"/>
+
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    MaxLines="1"
+                                    Text="{Binding Body}"
+                                    FontSize="Small"
+                                    TextColor="Gray"/>
+
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="4"
+                                    Grid.ColumnSpan="3"
+                                    Text="{Binding Date.DayOfWeek}"
+                                    HorizontalOptions="End"
+                                    FontSize="Micro"
+                                    TextColor="Gray"/>
+                            </Grid>
+                        </Frame>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <Grid>
+                    <Label
+                        Text="Inbox Empty"
+                        FontSize="Medium"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        />
+                </Grid>
+            </CollectionView.EmptyView>
+        </CollectionView>
+
+        <Button
+            HeightRequest="60"
+            WidthRequest="60"
+            ImageSource="baseline_create_white_24.png"
+            HorizontalOptions="End"
+            Margin="20"
+            CornerRadius="30"
+            BackgroundColor="#CB4335"
+            Command="{Binding NavigateToCreateEmailCommand}"/>
+
+    </StackLayout>
+</ContentPage>
