@@ -15,10 +15,10 @@ Gmail Clone App developed using Xamarin Forms for educational purposes.
 
 ### Screenshots of the app
 
-Empty Inbox
+- Empty Inbox
 ![EmptyEmailsList](https://user-images.githubusercontent.com/47201459/132117391-612e381f-4cbe-4d1d-b853-319d87de7f2b.PNG)
 
-Consulting Emails on Inbox
+- Consulting Emails on Inbox
 ![FullEmailsList](https://user-images.githubusercontent.com/47201459/132117398-b9367fa1-d955-4a58-91e7-681e18150630.PNG)
 
 Creating an Email
