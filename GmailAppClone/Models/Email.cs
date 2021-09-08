@@ -8,22 +8,22 @@ namespace GmailAppClone.Models
     public class Email : INotifyPropertyChanged
     {
         // Email Model
-        public Email(string from, string to, string body = null, string subject = "(empty subject)", string base64Image = null)
+        public Email(string from, string to, string body = null, string subject = "(empty subject)", string base64ImageAttachment = null)
         {
             From = from;
             To = to;
             Subject = subject;
             Body = body;
-            Date = DateTime.UtcNow;
-            Base64Attachment = base64Image;
+            ImageAttachment = base64ImageAttachment;
+            Date = DateTime.UtcNow; // Taking the actual date with UtcNow method.
         }
 
         public string From { get; set; }
         public string To { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
+        public string ImageAttachment { get; set; }
         public DateTime Date { get; set; }
-        public string Base64Attachment { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

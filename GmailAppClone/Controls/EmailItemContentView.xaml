@@ -6,37 +6,44 @@
              mc:Ignorable="d"
              x:Class="GmailAppClone.Controls.EmailItemContentView"
              x:Name="this">
-    <Frame
+    <!--Structure for email item:
+         Sender profile picture
+         From email
+         Subject
+         Body
+         Date
+         -->
+    <Frame 
         BindingContext="{x:Reference this}"
-        BorderColor="LightGray">
+        BorderColor="SlateGray">
         <Grid
-            RowDefinitions="Auto, Auto, Auto"
-            ColumnDefinitions="Auto, Auto, Auto">
+            ColumnDefinitions="Auto, Auto, Auto"
+            RowDefinitions="Auto, Auto, Auto">
 
             <Image
-                Grid.RowSpan="2"
+                Source="icon_account_circle"
                 Grid.Column="0"
-                Source="icon_account_circle"/>
+                Grid.RowSpan="2"/>
 
             <Label
-                Grid.Row="0"
+                Text="{Binding From}"
                 Grid.Column="1"
-                Text="{Binding From}"/>
+                Grid.Row="0"/>
 
             <Label
-                Grid.Row="1"
+                Text="{Binding Subject}"
                 Grid.Column="1"
-                Text="{Binding Subject}"/>
+                Grid.Row="1"/>
 
             <Label
-                Grid.Row="2"
+                Text="{Binding Body}"
                 Grid.Column="1"
-                Text="{Binding Body}"/>
+                Grid.Row="2"/>
 
             <Label
-                Grid.Row="0"
+                Text="{Binding Date.DayOfWeek}"
                 Grid.Column="4"
-                Text="{Binding Date.DayOfWeek}"/>
+                Grid.Row="0"/>
         </Grid>
     </Frame>
 </ContentView>

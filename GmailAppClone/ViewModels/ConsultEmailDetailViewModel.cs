@@ -9,26 +9,27 @@ namespace GmailAppClone.ViewModels
 {
     public class ConsultEmailDetailViewModel : BaseViewModel
     {
-        public Email SelectedEmail { get; set; }
+        public Email chossenEmail { get; set; }
         public ImageSource Attachment
         {
             get
             {
-                if (SelectedEmail.Base64Attachment != null)
+                if (chossenEmail.ImageAttachment != null)
                 {
-                    var byteArray = Convert.FromBase64String(SelectedEmail.Base64Attachment);
-                    var stream = new MemoryStream(byteArray);
+                    var byteImageArray = Convert.FromBase64String(chossenEmail.ImageAttachment);
+                    var stream = new MemoryStream(byteImageArray);
 
                     return ImageSource.FromStream(() => stream);
                 }
 
-                return null;
+                return null; // If there's no image attachment we just return null.
             }
         }
 
+        // Consult email constructor
         public ConsultEmailDetailViewModel(Email email)
         {
-            SelectedEmail = email;
+            chossenEmail = email;
         }
     }
 }
