@@ -8,7 +8,7 @@ namespace GmailAppClone.Models
     public class Email : INotifyPropertyChanged
     {
         // Email Model
-        public Email(string from, string to, string body = null, string subject = "(empty subject)", string base64ImageAttachment = null)
+        public Email(string from, string to, string subject = "(empty subject)", string body = null, string base64ImageAttachment = null)
         {
             From = from;
             To = to;

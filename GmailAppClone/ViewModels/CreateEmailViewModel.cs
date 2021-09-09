@@ -15,54 +15,57 @@ namespace GmailAppClone.ViewModels
     {
         private ObservableCollection<Models.Email> _emails;
 
-        public string Subject { get; set; }
-        public string Body { get; set; }
         public string From { get; set; }
         public string To { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
         public ImageSource Attachment { get; set; }
 
-        private string _base64Image { get; set; }
+        private string _base64ImageAttachment { get; set; }
         private string _attachmentPath { get; set; }
 
+        // Declaring commands
         public ICommand CreateEmailCommand { get; set; }
-        public ICommand AttachPhotoCommand { get; set; }
+        public ICommand AttachImageCommand { get; set; }
 
         public CreateEmailViewModel(ObservableCollection<Models.Email> emails)
         {
             _emails = emails;
 
             CreateEmailCommand = new Command(CreateEmail);
-            AttachPhotoCommand = new Command(AttachPhoto);
+            AttachImageCommand = new Command(AttachImage);
         }
 
-        private async void CreateEmail()
-        {
-            if (areRequiredFieldsEmpty())
-            {
-                await App.Current.MainPage.DisplayAlert("Error", "Missing sender or receiver", "Ok");
-
-                return;
-            }
-
-            var newEmail = new Models.Email(From, To, Body, Subject, _base64Image);
-            _emails.Add(newEmail);
-
-            var jsonString = JsonConvert.SerializeObject(_emails);
-            Preferences.Set("emails", jsonString);
-
-            await App.Current.MainPage.Navigation.PopAsync();
-
-            OpenExternalEmailApp();
-            SendNotification();
-        }
-
-        private bool areRequiredFieldsEmpty()
+        private bool requiredFieldsEmpty()
         {
             bool isSenderEmpty = string.IsNullOrEmpty(From);
             bool isReceiverEmpty = string.IsNullOrEmpty(To);
 
             return isSenderEmpty && isReceiverEmpty;
         }
+
+        private async void CreateEmail()
+        {
+            if (requiredFieldsEmpty())
+            {
+                await App.Current.MainPage.DisplayAlert("Error", "The Sender or receiver field cannot be empty", "Ok");
+
+                return;
+            }
+
+            var newEmail = new Models.Email(From, To, Subject, Body, _base64ImageAttachment);
+            _emails.Add(newEmail);
+
+            // Converting the emails colections to a JSON format.
+            var jsonString = JsonConvert.SerializeObject(_emails);
+            Preferences.Set("emails", jsonString);
+
+            await App.Current.MainPage.Navigation.PopAsync();
+
+            OpenExternalEmailApp(); // Function to open the real email app passing the subject and body data.
+            PushNotification(); // Function for pushing a notification after the email is created.
+        }
+
 
         private async void OpenExternalEmailApp()
         {
@@ -80,7 +83,7 @@ namespace GmailAppClone.ViewModels
             await Xamarin.Essentials.Email.ComposeAsync(message);
         }
 
-        private async void SendNotification()
+        private async void PushNotification()
         {
             var notification = new NotificationRequest
             {
@@ -95,15 +98,15 @@ namespace GmailAppClone.ViewModels
             await NotificationCenter.Current.Show(notification);
         }
 
-        private async void AttachPhoto()
+        private async void AttachImage()
         {
             var image = await MediaPicker.PickPhotoAsync(new MediaPickerOptions
             {
-                Title = "Please pick a photo"
+                Title = "Please select an image from your gallery"
             });
 
             _attachmentPath = image.FullPath;
-            _base64Image = Convert.ToBase64String(File.ReadAllBytes(image.FullPath));
+            _base64ImageAttachment = Convert.ToBase64String(File.ReadAllBytes(image.FullPath));
 
             var imageStream = await image.OpenReadAsync();
             Attachment = ImageSource.FromStream(() => imageStream);
