@@ -7,7 +7,7 @@
              x:Class="GmailAppClone.Views.CreateEmailPage"
              Title="Compose">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding AttachPhotoCommand}" IconImageSource="baseline_attachment_white_24.png"/>
+        <ToolbarItem Command="{Binding AttachImageCommand}" IconImageSource="baseline_attachment_white_24.png"/>
         <ToolbarItem Command="{Binding CreateEmailCommand}" IconImageSource="baseline_send_white_24.png"/>
         <ToolbarItem Order="Secondary" />
     </ContentPage.ToolbarItems>
